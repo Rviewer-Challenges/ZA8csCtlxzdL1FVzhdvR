@@ -1,0 +1,11 @@
+.tablero{
+    display:flex;
+    flex-wrap: wrap;
+    background-color: blue ;
+    width: 800px;
+    height: 700px;
+    justify-content: space-around;
+    margin: 0 auto;
+    padding: auto;
+    
+}
