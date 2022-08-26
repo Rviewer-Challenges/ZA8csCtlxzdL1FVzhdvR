@@ -4,12 +4,20 @@ import Carta from "./Carta";
 
 export default class Tablero extends Component {
   render() {
-    const cartas = [1, 2, 3, 4, 5, 6];
     return (
       <div className="tablero">
-        {cartas.map((carta) => (
-          <Carta/>
-        ))}
+        {this.props.baraja.map((carta, index) => {
+          const comparacion = this.props.parejaSeleccionada.indexOf(carta) > -1;
+          return (
+            <Carta
+              icono={carta.icono}
+              key={index}
+              comparacion={comparacion}
+              seleccionarCarta={() => this.props.seleccionarCarta(carta)}
+              emparejada={carta.emparejada}
+            />
+          );
+        })}
       </div>
     );
   }
