@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Cronometro from "./Cronometro";
 
 export default class Header extends Component {
   render() {
@@ -6,11 +7,11 @@ export default class Header extends Component {
       <header>
         <div className="titulo">Memorama</div>
 
-        <div className="movimientos">Movimientos :</div>
-        <div className="tiempo">Tiempo :</div>
+        <div className="movimientos">Movimientos : {this.props.numeroIntentos}</div>
+        <div className="tiempo">Tiempo :<Cronometro/></div>
         <div className="parejas">Parejas restantes :</div>
         <div>
-          <button className="reiniciar">Volver a página inicial</button>
+          <button className="reiniciar" onClick={this.props.reiniciarPartida}>Reiniciar </button>
         </div>
       </header>
     );

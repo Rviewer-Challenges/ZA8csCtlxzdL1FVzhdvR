@@ -1,16 +1,10 @@
 import shuffle from "lodash.shuffle";
+import Images from "./Images";
+import numero_cartas from "./Menu";
 
-const numero_cartas = 30;
+export default () => {
+  const images = Images();
 
-const Baraja = () => {
-  const images = [
-    "Homer.jpg",
-    "Bart.jpg",
-    "Marge.jpg",
-    "Maggie.jpg",
-    "Lisa.jpg",
-    "Abraham.jpg",
-  ];
   let cartas = [];
 
   while (cartas.length < numero_cartas) {
@@ -25,5 +19,3 @@ const Baraja = () => {
 
   return shuffle(cartas);
 };
-
-export default Baraja

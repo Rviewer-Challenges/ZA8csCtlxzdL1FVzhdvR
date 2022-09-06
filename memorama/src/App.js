@@ -10,6 +10,8 @@ const getEstadoInicial = () => {
     baraja,
     parejaSeleccionada: [],
     comparacion: false,
+    numeroIntentos: 0,
+    parejasRestantes: 0
   };
 };
 class App extends Component {
@@ -20,7 +22,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header />
+        <Header
+          numeroIntentos={this.state.numeroIntentos}
+          reiniciarPartida={() => this.reiniciarPartida()}
+        />
         <Tablero
           baraja={this.state.baraja}
           parejaSeleccionada={this.state.parejaSeleccionada}
@@ -32,7 +37,7 @@ class App extends Component {
   seleccionarCarta(carta) {
     if (
       this.state.comparacion ||
-      this.state.parejaSeleccionada.indexO(carta) > -1 ||
+      this.state.parejaSeleccionada.indexOf(carta) > -1 ||
       carta.emparejada
     ) {
       return;
@@ -41,8 +46,8 @@ class App extends Component {
     this.setState({
       parejaSeleccionada,
     });
-    if (parejaSeleccionada.leght === 2) {
-      this.compararpareja(parejaSeleccionada);
+    if (parejaSeleccionada.length === 2) {
+      this.compararPareja(parejaSeleccionada);
     }
   }
   compararPareja(parejaSeleccionada) {
@@ -50,9 +55,8 @@ class App extends Component {
     setTimeout(() => {
       const [primeraCarta, segundaCarta] = parejaSeleccionada;
       let baraja = this.state.baraja;
-      
-      if ( primeraCarta.icono === segundaCarta.icono )
-      {
+
+      if (primeraCarta.icono === segundaCarta.icono) {
         baraja = baraja.map((carta) => {
           if (carta.icono !== primeraCarta.icono) {
             return carta;
@@ -60,12 +64,23 @@ class App extends Component {
           return { ...carta, emparejada: true };
         });
       }
+      this.tableroSolucionado(baraja);
       this.setState({
         parejaSeleccionada: [],
         baraja,
-        comparacion : false
+        comparacion: false,
+        numeroIntentos: this.state.numeroIntentos + 1,
       });
     }, 1000);
+  }
+
+  tableroSolucionado(baraja) {
+    if (baraja.filter((carta) => !carta.emparejada).length === 0) {
+      alert(`Ganaste en ${this.state.numeroIntentos} intentos!`);
+    }
+  }
+  reiniciarPartida() {
+    this.setState(getEstadoInicial());
   }
 }
 
